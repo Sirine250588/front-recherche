@@ -1,0 +1,254 @@
+<div class="content-wrapper">
+  <div class="row">
+    <div class="col-lg-6 stretch-card">
+      <div class="col-lg-12 stretch-card">
+      <div class="card" style="width:1302px">
+        <div class="card-body">
+          <h4 class="card-title">Liste des évènements</h4>
+          <p class="card-description">
+            Add class <code>.Liste des évènements</code>
+          </p>
+
+
+          <button type="button" class="btn btn-success btn-rounded btn-fw" data-toggle="modal" data-target="#darkModalForm">Add</button>
+          <div class="table-responsive">
+             <!--table-->
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th>Nom</th>
+                <th>Date</th>
+                <th>Lieu</th>
+               <!-- <th>Administrateur</th>-->
+              </tr>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="let e of listevenement">
+                  <td>{{e.nomevenemnt}}</td>
+                  <td >{{e.dateevenemnt}}</td>
+                  <td>{{e.lieuevenemt}} </td>
+                  <td>{{e.administrateur.nomutilisateur}}</td>
+                  <!--<td><button class="btn btn-primary btn-xs" ><i class="fa fa-pencil" (click)="openModal(template);recuper(p.idpersonne, p.username, p.firstname, p.lastname, p.adress, p.mail, p.phone, p.cin,p.matricule, p.photo)"></i></button></td>-->
+
+
+                  <!--<td><button  (click)="delete(t.idthese)" class="btn btn-danger btn-rounded btn-fw"></button> </td>-->
+                  <td><button (click)="recuper(e.nomevenemnt,e.dateevenemnt,e.lieuevenemt,e.administrateur.nomutilisateur);delete(e.idevenemnt)" type="button" class="btn btn-danger btn-rounded btn-fw">Delete</button>
+
+
+                 &nbsp;
+
+                    <button  (click)="recuper(e.nomevenemnt,e.dateevenemnt,e.lieuevenemt,e.administrateur.nomutilisateur)" type="button" data-toggle="modal" data-target="#modifform" class="btn btn-warning btn-rounded btn-fw">
+                      Update</button>
+                  </tr>
+
+                </tbody>
+
+            </table>
+           <!--table-->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </div>
+</div>
+</div>
+<!--****-->
+<div class="modal fade" id="modifform" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+   aria-hidden="true">
+<div class="modal-dialog form-dark" role="document">
+  <!--Content-->
+  <div class="modal-content card card-image" style="background-image: url('https://amymhaddad.s3.amazonaws.com/morocco-blue.png');">
+    <div class="text-white rgba-stylish-strong py-5 px-5 z-depth-4">
+      <!--Header-->
+      <div class="modal-header text-center pb-4">
+        <h3 class="modal-title w-100  font-weight-bold" id="myModalLabel"><strong>modifier </strong> <a
+          class="green-text font-weight-bold"><strong>un évènement</strong></a></h3>
+        <button type="button" class="close white-text" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!--Body-->
+      <div class="modal-body">
+    <form [formGroup]="evenementmodifform" (submit) = modifevenement()   novalidate>
+      <div class="form-group">
+        <label >Nom</label>
+        <input type="text" class="form-control"  formControlName="nomevenemnt" placeholder={{evenemente.nomevenemnt}} required [ngClass]="{ 'is-invalid': submitedmodifevenement && evenementmodifform1.nomevenemnt.errors }" />
+
+
+        <div *ngIf="submitedmodifevenement && evenementmodifform1.nomevenemnt.errors" class="invalid-feedback">
+          <div *ngIf="evenementmodifform1.nomevenemnt.errors.required" style="color: red"> Nom est obligatoire </div>
+
+        </div>
+      </div>
+      <div class="form-group">
+        <label >Date</label>
+        <input type="date" class="form-control"  formControlName="dateevenemnt" placeholder={{evenemente.dateevenemnt}} required  [ngClass]="{ 'is-invalid': submitedmodifevenement && evenementmodifform1.dateevenemnt.errors }" />
+
+
+        <div *ngIf="submitedmodifevenement && evenementmodifform1.dateevenemnt.errors" class="invalid-feedback">
+          <div *ngIf="evenementmodifform1.dateevenemnt.errors.required" style="color: red"> Date est obligatoire </div>
+
+        </div>
+      </div>
+
+
+
+
+      <div class="form-group">
+        <label >Lieu</label>
+        <input type="text" class="form-control"  formControlName="lieuevenemt" placeholder={{evenemente.lieuevenemt}} required  [ngClass]="{ 'is-invalid': submitedmodifevenement && evenementmodifform1.lieuevenemt.errors}" />
+
+
+        <div *ngIf="submitedmodifevenement && evenementmodifform1.lieuevenemt.errors" class="invalid-feedback">
+          <div *ngIf="evenementmodifform1.lieuevenemt.errors.required" style="color: red"> Lieu est obligatoire </div>
+
+        </div>
+      </div>
+
+<!--*****-->
+
+<div class="form-group">
+  <label >Administrateur</label>
+<select id="administrateur" type="text"  class="form-control"
+        formControlName="administrateur"   autofocus [ngClass]="{ 'is-invalid': submitedmodifevenement && evenementmodifform1.administrateur.errors }">
+  <option value={{a.idutilisateur}} *ngFor="let a of listadmin">{{a.nomutilisateur}}</option>
+</select>
+<div *ngIf="submitedmodifevenement && evenementmodifform1.administrateur.errors" class="invalid-feedback">
+  <div *ngIf="evenementmodifform1.administrateur.errors.required" style="color: red"> Administrateur est obligatoire </div>
+
+</div>
+</div>
+<!--*****-->
+
+
+
+
+      <div class="modal-footer">
+        <div class="btn-group btn-group-justified" role="group" aria-label="group button">
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default" role="button">Annuler</button>
+          </div>
+
+          <div class="btn-group" role="group">
+            <button type="submit" class="btn btn-default btn-hover-green" data-action="save"  role="button">Modifier</button>
+          </div>
+        </div>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+</div>
+</div>
+</div>
+
+<!--****-->
+
+<!-- Modal HTML  Ajouter Evènement-->
+
+<div class="modal fade" id="darkModalForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+   aria-hidden="true">
+<div class="modal-dialog form-dark" role="document">
+  <!--Content-->
+  <div class="modal-content card card-image" style="background-image: url('https://amymhaddad.s3.amazonaws.com/morocco-blue.png');">
+    <div class="text-white rgba-stylish-strong py-5 px-5 z-depth-4">
+      <!--Header-->
+      <div class="modal-header text-center pb-4">
+        <h3 class="modal-title w-100  font-weight-bold" id="myModalLabel"><strong>Ajouter </strong> <a
+          class="green-text font-weight-bold"><strong>un Evènement</strong></a></h3>
+        <button type="button" class="close white-text" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!--Body-->
+      <div class="modal-body">
+        <!--Body-->
+        <Form  [formGroup]="evenementform" (submit) = evenement()>
+        <label for="nomevenemnt"><strong>Nom</strong></label>
+        <input type="nomevenemnt" id="nomevenemnt" name = "nomevenemnt"  class="form-control" formControlName="nomevenemnt" autofocus [ngClass]="{ 'is-invalid': submitedevenement && evenementform1.nomevenemnt.errors}"/>
+        <label data-error="wrong" data-success="right" for="nomevenemnt"></label>
+        <div *ngIf="submitedevenement && evenementform1.nomevenemnt.errors" class="invalid-feedback">
+          <div *ngIf="evenementform1.nomevenemnt.errors.required" style="color: red"> Nom est obligatoire </div>
+        </div>
+
+        <label for="dateevenemnt"><strong>Date</strong></label>
+        <input type="date" id="dateevenemnt" name = "dateevenemnt"  class="form-control" formControlName="dateevenemnt" autofocus [ngClass]="{ 'is-invalid': submitedevenement && evenementform1.dateevenemnt.errors}"/>
+        <label data-error="wrong" data-success="right" for="sujetthese"></label>
+        <div *ngIf="submitedevenement && evenementform1.dateevenemnt.errors" class="invalid-feedback">
+          <div *ngIf="evenementform1.dateevenemnt.errors.required" style="color: red"> Date est obligatoire </div>
+        </div>
+
+
+        <label for="lieuevenemt"><strong>Lieu</strong></label>
+        <input type="lieuevenemt" id="lieuevenemt" name = "lieuevenemt"  class="form-control" formControlName="lieuevenemt" autofocus [ngClass]="{ 'is-invalid': submitedevenement && evenementform1.lieuevenemt.errors}"/>
+        <label data-error="wrong" data-success="right" for="etatthese"></label>
+        <div *ngIf="submitedevenement && evenementform1.lieuevenemt.errors" class="invalid-feedback">
+          <div *ngIf="evenementform1.lieuevenemt.errors.required" style="color: red"> Lieu est obligatoire </div>
+        </div>
+
+
+        <!--**code de champ administrateur**-->
+
+          <label for="administrateur"  class="label">Administrateur</label>
+          <select id="administrateur" type="text"  class="form-control"
+                  formControlName="administrateur"   autofocus [ngClass]="{ 'is-invalid': submitedevenement && evenementform1.administrateur.errors }">
+            <option value={{a.idutilisateur}} *ngFor="let a of listadmin">{{a.nomutilisateur}}</option>
+          </select>
+          <div *ngIf="submitedevenement && evenementform1.administrateur.errors" class="invalid-feedback">
+            <div *ngIf="evenementform1.administrateur.errors.required">administrateur is required</div>
+          </div>
+
+        <!--**code de champ administrateur**-->
+
+
+
+        <!--<div class="md-form pb-3">
+          <input type="password" id="Form-pass5" class="form-control validate white-text">
+          <label data-error="wrong" data-success="right" for="Form-pass5">Your password</label>
+        </div>-->
+
+        <!--Grid row-->
+        <div class="row d-flex align-items-center mb-4">
+
+          <!--Grid column-->
+          <br>
+          <br>
+          <br>
+          <div class="text-center mb-3 col-md-12">
+            <input type="submit" class="button" class="btn btn-danger btn-rounded btn-fw" value="Ajouter">
+
+            <!--<button type="button" class="btn btn-success btn-block btn-rounded z-depth-1">Ajouter</button>-->
+          </div>
+          <!--Grid column-->
+
+        </div>
+        <!--Grid row-->
+
+        <!--Grid row-->
+        <!--<div class="row">
+
+
+         <div class="col-md-12">
+           <p class="font-small white-text d-flex justify-content-end">Have an account? <a href="#" class="green-text ml-1 font-weight-bold">
+             Log in</a></p>
+         </div>
+
+
+       </div>-->
+        <!--Grid row-->
+</Form>
+      </div>
+    </div>
+  </div>
+  <!--/.Content-->
+</div>
+</div>
+<!-- Modal HTML Ajouter Evènement-->
+
+
+
+
+

@@ -1,0 +1,203 @@
+<div class="login-wrap">
+  <div class="login-html">
+    <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Login</label>
+    <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Inscrire</label>
+    <div class="login-form">
+<!--Login-->
+      <Form class="sign-in-htm" [formGroup]="loginform" (ngSubmit)="login()">
+
+        <div class="group">
+          <label for="usernameutilisateur" class="label">Nom D'utilisateur</label>
+          <input id="usernameutilisateur" type="text" class="input"  required="required"
+                 formControlName="usernameutilisateur"
+                 [ngClass]="{ 'is-invalid': submited && f.usernameutilisateur.errors }">
+          <div *ngIf="submited && f.usernameutilisateur.errors"
+                class="invalid-feedback">
+            <div *ngIf="f.usernameutilisateur.errors.required"> Nom D'utilisateur obligatoire </div>
+          </div>
+        </div>
+
+
+        <div class="group">
+          <label for="passwordutilisateur" class="label">Mot de passe</label>
+          <input id="passwordutilisateur" type="password" class="input"   required="required"
+                 formControlName="passwordutilisateur"
+          [ngClass]="{ 'is-invalid': submited && f.passwordutilisateur.errors }">
+
+
+          <div *ngIf="submited && f.passwordutilisateur.errors"
+               class="invalid-feedback">
+            <div *ngIf="f.passwordutilisateur.errors.required"> Mot de passe obligatoire </div>
+          </div>
+        </div>
+
+
+        <div class="group">
+          <input type="submit" class="button" value="Connexion">
+        </div>
+        <div class="hr"></div>
+
+      </Form>
+    <!--</div>-->
+
+
+
+
+
+<!--Register-->
+
+      <Form class="sign-up-htm" [formGroup]="registerForm" (submit) = register()>
+
+
+            <!-- <label for="user" class="label">Username</label>
+          <input id="user" type="text" class="input">-->
+
+
+        <!--**-->
+        <div class="group">
+        <label for="usernameutilisateur" class="label">Username</label>
+        <input id="usernameutilisateur" type="text" class="form-control" formControlName="usernameutilisateur"   autofocus [ngClass]="{ 'is-invalid': submited && f1.usernameutilisateur.errors }" />
+        <div *ngIf="submited && f1.usernameutilisateur.errors" class="invalid-feedback">
+          <div *ngIf="f1.usernameutilisateur.errors.required" style="color: red"> username est obligatoire </div>
+        </div>
+        </div>
+        <!--**-->
+        <!--**-->
+        <div class="group">
+          <label for="passwordutilisateur" class="label">password</label>
+          <input id="passwordutilisateur" type="password" class="form-control" formControlName="passwordutilisateur"  autofocus [ngClass]="{ 'is-invalid': submited && f1.passwordutilisateur.errors }" />
+          <div *ngIf="submited && f1.passwordutilisateur.errors" class="invalid-feedback">
+            <div *ngIf="f1.passwordutilisateur.errors.required" style="color: red"> password est obligatoire </div>
+          </div>
+        </div>
+        <!--**-->
+
+        <!--**-->
+        <div class="group">
+          <label for="firstnameutilisateur" class="label">firstname</label>
+          <input id="firstnameutilisateur" type="text" class="form-control" formControlName="firstnameutilisateur"  autofocus [ngClass]="{ 'is-invalid': submited && f1.firstnameutilisateur.errors }" />
+          <div *ngIf="submited && f1.firstnameutilisateur.errors" class="invalid-feedback">
+            <div *ngIf="f1.firstnameutilisateur.errors.required" style="color: red"> firstname est obligatoire </div>
+          </div>
+        </div>
+        <!--**-->
+        <!--**-->
+        <div class="group">
+          <label for="lastnameutilisateur" class="label">lastname</label>
+          <input id="lastnameutilisateur" type="text" class="form-control" formControlName="lastnameutilisateur"  autofocus [ngClass]="{ 'is-invalid': submited && f1.lastnameutilisateur.errors }" />
+          <div *ngIf="submited && f1.lastnameutilisateur.errors" class="invalid-feedback">
+            <div *ngIf="f1.lastnameutilisateur.errors.required" style="color: red"> lastname est obligatoire </div>
+          </div>
+        </div>
+        <!--**-->
+        <div class="group">
+          <label for="nomutilisateur" class="label">prénom</label>
+          <input id="nomutilisateur" type="text" class="form-control" formControlName="nomutilisateur"   autofocus [ngClass]="{ 'is-invalid': submited && f1.nomutilisateur.errors }" />
+          <div *ngIf="submited && f1.nomutilisateur.errors" class="invalid-feedback">
+            <div *ngIf="f1.nomutilisateur.errors.required" style="color: red"> nom est obligatoire </div>
+          </div>
+        </div>
+        <!--**-->
+        <div class="group">
+          <label for="prenomutilisateur" class="label">prénom</label>
+          <input id="prenomutilisateur" type="text" class="form-control" formControlName="prenomutilisateur"   autofocus [ngClass]="{ 'is-invalid': submited && f1.prenomutilisateur.errors }" />
+          <div *ngIf="submited && f1.prenomutilisateur.errors" class="invalid-feedback">
+            <div *ngIf="f1.prenomutilisateur.errors.required" style="color: red"> prénom est obligatoire </div>
+          </div>
+        </div>
+        <!--**-->
+        <div class="group">
+          <label for="datenaissanceutilisateur" class="label">Date Naissance</label>
+          <input id="datenaissanceutilisateur" type="date" class="form-control" formControlName="datenaissanceutilisateur"  autofocus [ngClass]="{ 'is-invalid': submited && f1.datenaissanceutilisateur.errors }" />
+          <div *ngIf="submited && f1.datenaissanceutilisateur.errors" class="invalid-feedback">
+            <div *ngIf="f1.datenaissanceutilisateur.errors.required" style="color: red"> date naissance est obligatoire </div>
+          </div>
+        </div>
+        <!--**-->
+        <div class="group">
+          <label for="emailutilisateur" class="label">Email</label>
+          <input id="emailutilisateur" type="text" class="form-control" formControlName="emailutilisateur"  autofocus [ngClass]="{ 'is-invalid': submited && f1.emailutilisateur.errors }" />
+          <div *ngIf="submited && f1.emailutilisateur.errors" class="invalid-feedback">
+            <div *ngIf="f1.emailutilisateur.errors.required" style="color: red"> email est obligatoire </div>
+            <div *ngIf="f1.emailutilisateur.errors.pattern" style="color: red"> email invalid  </div>
+          </div>
+        </div>
+        <!--**-->
+        <!--**-->
+        <div class="group">
+          <label for="sexeutilisateur" class="label">sexe</label>
+          <select   type="text" name="sexeutilisateur" id="sexeutilisateur" class="form-control" formControlName="sexeutilisateur"  autofocus [ngClass]="{ 'is-invalid': submited && f1.sexeutilisateur.errors }">
+            <option value="Monsieur">Monsieur</option>
+            <option value="Madame">Madame</option>
+          </select>
+
+          <div *ngIf="submited && f1.sexeutilisateur.errors" class="invalid-feedback">
+            <div *ngIf="f1.sexeutilisateur.errors.required" style="color: red"> sexe est obligatoire </div>
+          </div>
+        </div>
+        <!--**-->
+
+        <!--**-->
+        <div class="group">
+          <label for="telephoneutilisateur" class="label">téléphone</label>
+          <input id="telephoneutilisateur" type="text" class="form-control" formControlName="telephoneutilisateur" autofocus [ngClass]="{ 'is-invalid': submited && f1.telephoneutilisateur.errors }" />
+          <div *ngIf="submited && f1.telephoneutilisateur.errors" class="invalid-feedback">
+            <div *ngIf="f1.telephoneutilisateur.errors.required" style="color: red"> téléphone est obligatoire </div>
+          </div>
+        </div>
+        <!--**-->
+
+        <!--**-->
+        <div class="group">
+          <label for="adresseutilisateur" class="label">Adresse</label>
+          <input id="adresseutilisateur" type="text" class="form-control" formControlName="adresseutilisateur"  autofocus [ngClass]="{ 'is-invalid': submited && f1.adresseutilisateur.errors }" />
+          <div *ngIf="submited && f1.adresseutilisateur.errors" class="invalid-feedback">
+            <div *ngIf="f1.adresseutilisateur.errors.required" style="color: red"> Adresse est obligatoire </div>
+          </div>
+        </div>
+        <!--**-->
+        <div class="group">
+          <label for="photoutilisateur" class="label">Photo</label>
+          <input id="photoutilisateur" type="file" class="form-control"
+          formControlName="photoutilisateur" (change)="handleFileInput($event.target.files)" [ngClass]="{ 'is-invalid': submited && f1.photoutilisateur.errors }" />
+          <div *ngIf="submited && f1.photoutilisateur.errors" class="invalid-feedback">
+            <div *ngIf="f1.photoutilisateur.errors.required" style="color: red"> Photo est obligatoire </div>
+          </div>
+        </div>
+        <!--**-->
+        <div class="group">
+          <label for="gradeutilisateur" class="label">Grade</label>
+          <input id="gradeutilisateur" type="text" class="form-control" formControlName="gradeutilisateur"   autofocus [ngClass]="{ 'is-invalid': submited && f1.gradeutilisateur.errors }" />
+          <div *ngIf
+
+          ="submited && f1.gradeutilisateur.errors" class="invalid-feedback">
+            <div *ngIf="f1.gradeutilisateur.errors.required" style="color: red"> Grade est obligatoire </div>
+          </div>
+        </div>
+        <!--**-->
+
+        <!--**code de champ thèse**-->
+        <div class="group">
+          <label for="these"  class="label">thèse</label>
+          <select id="these" type="text"  class="form-control"
+                  formControlName="these"   autofocus [ngClass]="{ 'is-invalid': submited && f1.these.errors }">
+            <option value={{t.idthese}} *ngFor="let t of listthese">{{t.titrethese}}</option>
+          </select>
+          <div *ngIf="submited && f1.these.errors" class="invalid-feedback">
+            <div *ngIf="f1.these.errors.required">these is required</div>
+          </div>
+        </div>
+        <!--**code de champ thèse**-->
+
+
+
+
+        <div class="group">
+          <input type="submit" class="button" value="Valider">
+        </div>
+        <div class="hr"></div>
+
+      </Form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,241 @@
+<div class="content-wrapper">
+  <div class="row">
+    <div class="col-lg-6 stretch-card">
+      <div class="col-lg-12 stretch-card">
+      <div class="card" style="width:1302px">
+        <div class="card-body">
+          <h4 class="card-title">Liste des articles</h4>
+          <p class="card-description">
+            Add class <code>.Liste des articles</code>
+          </p>
+
+
+          <button type="button" class="btn btn-success btn-rounded btn-fw" data-toggle="modal" data-target="#darkModalForm">Add</button>
+          <div class="table-responsive">
+             <!--table-->
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th>Titre</th>
+                <th>Description</th>
+                <th>Sujet</th>
+                <th>Etat</th>
+                <th>Membre</th>
+              </tr>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="let a of listarticle">
+                  <td>{{a.titrearticle}}</td>
+                  <td >{{a.descriptionarticle}}</td>
+                  <td>{{a.sujetarticle}} </td>
+                  <td>{{a.etatarticle}} </td>
+                  <td>{{a.membre.nomutilisateur}}&nbsp;{{a.membre.prenomutilisateur}}</td>
+                  <td *ngIf="a.etatarticle">déjà valider</td>
+
+                  <td *ngIf="!a.etatarticle"><button  (click)="valider(a.idarticle)" class="btn btn-success btn-rounded btn-fw"></button> </td>
+                  <td><button (click)="recuper(a.idarticle,a.titrearticle,a.descriptionarticle,a.sujetarticle,a.etatarticle,a.membre.nomutilisateur);DeleteArticle(a.idarticle)" type="button" class="btn btn-danger btn-rounded btn-fw">Delete</button>
+
+
+                 &nbsp;
+
+                    <button  (click)="recuper(a.idarticle,a.titrearticle,a.descriptionarticle,a.sujetarticle,a.etatarticle,a.membre.nomutilisateur)" type="button" data-toggle="modal" data-target="#modifform" class="btn btn-warning btn-rounded btn-fw">
+                      Update</button>
+                  </tr>
+
+                </tbody>
+
+            </table>
+           <!--table-->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </div>
+</div>
+</div>
+<!--****-->
+<div class="modal fade" id="modifform" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+   aria-hidden="true">
+<div class="modal-dialog form-dark" role="document">
+  <!--Content-->
+  <div class="modal-content card card-image" style="background-image: url('https://amymhaddad.s3.amazonaws.com/morocco-blue.png');">
+    <div class="text-white rgba-stylish-strong py-5 px-5 z-depth-4">
+      <!--Header-->
+      <div class="modal-header text-center pb-4">
+        <h3 class="modal-title w-100  font-weight-bold" id="myModalLabel"><strong>modifier </strong> <a
+          class="green-text font-weight-bold"><strong>un article</strong></a></h3>
+        <button type="button" class="close white-text" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!--Body-->
+      <div class="modal-body">
+    <form [formGroup]="articleModifForme" (submit) = ModifierArticle()   novalidate>
+      <div class="form-group">
+        <label >Titre</label>
+        <input type="text" class="form-control"  formControlName="titrearticle" placeholder={{articlee.titrearticle}} required [ngClass]="{ 'is-invalid': articlesubmitmodif && fonctionmodifierarticle.titrearticle.errors }" />
+        <div *ngIf="articlesubmitmodif && fonctionmodifierarticle.titrearticle.errors" class="invalid-feedback">
+          <div *ngIf="fonctionmodifierarticle.titrearticle.errors.required" style="color: red"> Titre est obligatoire </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label >Description</label>
+        <input type="text" class="form-control"  formControlName="descriptionarticle" placeholder={{articlee.descriptionarticle}} required  [ngClass]="{ 'is-invalid': articlesubmitmodif && fonctionmodifierarticle.descriptionarticle.errors }" />
+        <div *ngIf="articlesubmitmodif && fonctionmodifierarticle.descriptionarticle.errors" class="invalid-feedback">
+          <div *ngIf="fonctionmodifierarticle.descriptionarticle.errors.required" style="color: red"> Sujet est obligatoire </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label >Sujet</label>
+        <input type="text" class="form-control"  formControlName="sujetarticle" placeholder={{articlee.sujetarticle}} required  [ngClass]="{ 'is-invalid': articlesubmitmodif && fonctionmodifierarticle.sujetarticle.errors }" />
+        <div *ngIf="articlesubmitmodif && fonctionmodifierarticle.sujetarticle.errors" class="invalid-feedback">
+          <div *ngIf="fonctionmodifierarticle.sujetarticle.errors.required" style="color: red"> Sujet est obligatoire </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label >Etat</label>
+        <input type="text" class="form-control"  formControlName="etatthese" placeholder={{articlee.etatarticle}} required  [ngClass]="{ 'is-invalid': articlesubmitmodif && fonctionmodifierarticle.etatarticle.errors }" />
+        <div *ngIf="articlesubmitmodif && fonctionmodifierarticle.etatarticle.errors" class="invalid-feedback">
+          <div *ngIf="fonctionmodifierarticle.etatarticle.errors.required" style="color: red"> Etat est obligatoire </div>
+         </div>
+      </div>
+
+<!--***** membre   -->
+
+<div class="form-group">
+  <label >Membre</label>
+<select id="membre" type="text"  class="form-control"
+        formControlName="membre"   autofocus [ngClass]="{ 'is-invalid': articlesubmitmodif && fonctionmodifierarticle.membre.errors }">
+  <option value={{m.idutilisateur}} *ngFor="let m of listmembre">{{m.nomutilisateur}}</option>
+</select>
+<div *ngIf="articlesubmitmodif && fonctionmodifierarticle.membre.errors" class="invalid-feedback">
+  <div *ngIf="fonctionmodifierarticle.membre.errors.required" style="color: red"> Membre est obligatoire </div>
+</div>
+</div>
+<!--*****  membre-->
+
+<div class="modal-footer">
+  <div class="btn-group btn-group-justified" role="group" aria-label="group button">
+    <div class="btn-group" role="group">
+      <button type="button" class="btn btn-default" role="button">Annuler</button>
+    </div>
+
+    <div class="btn-group" role="group">
+       <button type="submit" class="btn btn-default btn-hover-green" data-action="save"  role="button">Modifier</button>
+      </div>
+    </div>
+  </div>
+</form>
+
+  </div>
+</div>
+</div>
+</div>
+</div>
+
+<!--****-->
+
+<!-- Modal HTML  Ajouter Thèse-->
+
+<div class="modal fade" id="darkModalForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+   aria-hidden="true">
+<div class="modal-dialog form-dark" role="document">
+  <!--Content-->
+  <div class="modal-content card card-image" style="background-image: url('https://amymhaddad.s3.amazonaws.com/morocco-blue.png');">
+    <div class="text-white rgba-stylish-strong py-5 px-5 z-depth-4">
+      <!--Header-->
+      <div class="modal-header text-center pb-4">
+        <h3 class="modal-title w-100  font-weight-bold" id="myModalLabel"><strong>Ajouter </strong> <a
+          class="green-text font-weight-bold"><strong>un article</strong></a></h3>
+        <button type="button" class="close white-text" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!--Body-->
+      <div class="modal-body">
+        <!--Body-->
+        <Form  [formGroup]="articleForme" (submit) = AjouterArticle()>
+        <label for="titrearticle"><strong>Titre</strong></label>
+        <input type="titrearticle" id="titrearticle" name = "titrearticle"  class="form-control" formControlName="titrearticle" autofocus [ngClass]="{ 'is-invalid': articlesubmited && fonctionajouterarticle.titrearticle.errors}"/>
+        <label data-error="wrong" data-success="right" for="titrethese"></label>
+        <div *ngIf="articlesubmited && fonctionajouterarticle.titrearticle.errors" class="invalid-feedback">
+          <div *ngIf="fonctionajouterarticle.titrearticle.errors.required" style="color: red"> Titre est obligatoire </div>
+        </div>
+
+        <label for="descriptionarticle"><strong>Description</strong></label>
+        <input type="descriptionarticle" id="descriptionarticle" name = "descriptionarticle"  class="form-control" formControlName="descriptionarticle" autofocus [ngClass]="{ 'is-invalid': articlesubmited && fonctionajouterarticle.descriptionarticle.errors}"/>
+        <label data-error="wrong" data-success="right" for="descriptionarticle"></label>
+        <div *ngIf="articlesubmited && fonctionajouterarticle.descriptionarticle.errors" class="invalid-feedback">
+          <div *ngIf="fonctionajouterarticle.descriptionarticle.errors.required" style="color: red"> Description est obligatoire </div>
+        </div>
+
+
+        <label for="etatarticle"><strong>Etat</strong></label>
+        <input type="etatarticle" id="etatarticle" name = "etatarticle"  class="form-control" formControlName="etatarticle" autofocus [ngClass]="{ 'is-invalid': articlesubmited && fonctionajouterarticle.etatarticle.errors}"/>
+        <label data-error="wrong" data-success="right" for="etatarticle"></label>
+        <div *ngIf="articlesubmited && fonctionajouterarticle.etatarticle.errors" class="invalid-feedback">
+          <div *ngIf="fonctionajouterarticle.etatarticle.errors.required" style="color: red"> Etat est obligatoire </div>
+        </div>
+
+
+        <!--**code de champ membre**-->
+
+          <label for="membre"  class="label">Membre</label>
+          <select id="membre" type="text"  class="form-control"
+                  formControlName="membre"   autofocus [ngClass]="{ 'is-invalid': articlesubmited && fonctionajouterarticle.membre.errors }">
+            <option value={{m.idutilisateur}} *ngFor="let m of listmembre">{{m.nomutilisateur}}</option>
+          </select>
+          <div *ngIf="articlesubmited && fonctionajouterarticle.membre.errors" class="invalid-feedback">
+            <div *ngIf="fonctionajouterarticle.membre.errors.required">Membre is required</div>
+          </div>
+
+        <!--**code de champ membre**-->
+
+        <!--Grid row-->
+        <div class="row d-flex align-items-center mb-4">
+
+          <!--Grid column-->
+          <br>
+          <br>
+          <br>
+          <div class="text-center mb-3 col-md-12">
+            <input type="submit" class="button" class="btn btn-danger btn-rounded btn-fw" value="Ajouter">
+
+            <!--<button type="button" class="btn btn-success btn-block btn-rounded z-depth-1">Ajouter</button>-->
+          </div>
+          <!--Grid column-->
+
+        </div>
+        <!--Grid row-->
+
+        <!--Grid row-->
+        <!--<div class="row">
+
+
+         <div class="col-md-12">
+           <p class="font-small white-text d-flex justify-content-end">Have an account? <a href="#" class="green-text ml-1 font-weight-bold">
+             Log in</a></p>
+         </div>
+
+
+       </div>-->
+        <!--Grid row-->
+</Form>
+      </div>
+    </div>
+  </div>
+  <!--/.Content-->
+</div>
+</div>
+<!-- Modal HTML Ajouter Thèse-->
+
+
+
+
+
+
